@@ -20,11 +20,13 @@ const int q = 3;  //Number of values each spin can take
 
 const int L = 16;  //System size
 
-const double T = 2; //Temperature in units of J
+const double k_B = 1.380649 * pow(10, -23);  //Boltzmann constant
+
+const double T = 0.25; //Temperature in units of J		NEEDS TO BE REPLACE FOR T/J=0.5
 
 const int N = L; //Total number of spins
 
-const double pconnect = 0.5;  //Connection probability
+const double pconnect = 1 - exp(T);  //Connection probability
 
 const int NCLUSTERS = 1;  //Number of cluster builds in one MC step
 
@@ -111,7 +113,7 @@ cx_vec k(N);
 void C(cx_vec& k) {
 
 	ofstream ofile;
-	ofile.open("C(r).txt");
+	ofile.open("C(r)_T_0.25.txt");		//NEEDS TO BE REPLACE FOR T / J = 0.5
 	ofile << "r		k" << endl;
 	ofile << scientific;
 
@@ -150,7 +152,7 @@ void C(cx_vec& k) {
 
 	}
 
-		
+
 
 }
 
