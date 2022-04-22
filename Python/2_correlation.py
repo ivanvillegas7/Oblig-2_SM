@@ -9,9 +9,11 @@ import matplotlib.pyplot as plt
 
 r=[]
 
-C=[]
+C1=[]
 
-with open("C(r).txt") as infile:
+C2=[]
+
+with open("C(r)_T_0.25.txt") as infile:
     infile.readline()
     
     lines= infile.readlines()
@@ -22,11 +24,22 @@ with open("C(r).txt") as infile:
         
         r.append(float(vals[0]))
         
-        vals[1]=vals[1].replace("(","").replace(")","")
+        C1.append(float(vals[1]))
         
-        C.append(tuple(map(float, vals[1].split(',')))[0])
+with open("C(r)_T_0.5.txt") as infile:
+    infile.readline()
+    
+    lines= infile.readlines()
+    
+    for line in lines:
+        
+        vals = line.split()
+        
+        C2.append(float(vals[1]))
 
-plt.plot(r, C)
+plt.plot(r, C1, label='T/J=0.25')
+plt.plot(r, C2, label='T/J=0.50')
+plt.legend()
 plt.grid(True)
 plt.xlabel(r'$r$ []')
 plt.ylabel(r'$C(r))$ []')
