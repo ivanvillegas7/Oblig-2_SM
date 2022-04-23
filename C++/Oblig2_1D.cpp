@@ -114,7 +114,7 @@ void C(cx_vec& k) {
 
 	ofstream ofile;
 	ofile.open("C(r)_T_0.25.txt");		//NEEDS TO BE REPLACE FOR T / J = 0.5
-	ofile << "r		k" << endl;
+	ofile << "r" << "	" << "Real part" << endl;
 	ofile << scientific;
 
 	for (int r = 0; r < N; r++) {
