@@ -26,7 +26,7 @@ const double T = 0.25; //Temperature in units of J		NEEDS TO BE REPLACE FOR T/J=
 
 const int N = L; //Total number of spins
 
-const double pconnect = 1 - exp(1 / T);  //Connection probability
+const double pconnect = 1 - exp(-1 / T);  //Connection probability
 
 const int NCLUSTERS = 1;  //Number of cluster builds in one MC step
 
