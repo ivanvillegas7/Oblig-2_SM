@@ -22,7 +22,7 @@ const int L = 16;  //System size
 
 const double k_B = 1.380649 * pow(10, -23);  //Boltzmann constant
 
-const double T = 0.25; //Temperature in units of J		NEEDS TO BE REPLACE FOR T/J=0.5
+const double T = 0.5; //Temperature in units of J		NEEDS TO BE REPLACE FOR T/J=0.5
 
 const int N = L; //Total number of spins
 
@@ -113,7 +113,7 @@ cx_vec k(N);
 void C(cx_vec& k) {
 
 	ofstream ofile;
-	ofile.open("C(r)_T_0.25.txt");		//NEEDS TO BE REPLACE FOR T / J = 0.5
+	ofile.open("C(r)_T_0.5.txt");		//NEEDS TO BE REPLACE FOR T / J = 0.5
 	ofile << "r" << "	" << "Real part" << endl;
 	ofile << scientific;
 
@@ -256,7 +256,7 @@ int main() {
 		m2 /= NMSTEPS;
 		m4 /= NMSTEPS;
 
-		cout << m << "		" << m1 << "		" << m2 << "		" << m4 << endl;
+		cout << m << "	 " << m1 << "	 " << m2 << "	 " << m4 << endl;
 
 	}
 
