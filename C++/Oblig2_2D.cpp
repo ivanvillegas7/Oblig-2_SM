@@ -61,7 +61,7 @@ cx_vec W(q);  //Order parameter weights
 
 vector <int> pos(N);
 
-vector <double> T = TJ(0, pow(10, 10), pow(10, 3));
+vector <double> T = TJ(0, 2, pow(10, 3));
 
 vector<double> pconnect;
 
@@ -211,7 +211,7 @@ void C(cx_vec& k, int h) {
 int main() {
 
 	ofstream ofile;
-	ofile.open("m_2D_16.txt");//NEEDS TO BE CHANGED FOR DIFFERENT SIZES L={8, 16, 32}
+	ofile.open("m_2D.txt");//NEEDS TO BE CHANGED FOR DIFFERENT SIZES L={8, 16, 32} WHEN EVALUATING GAMMA
 	ofile << "T" << "	" << "Real part of <m>" << "	" << "<|m|^2>" << "	" << "<|m|^4>" << endl;
 	ofile << scientific;
 	
