@@ -256,7 +256,7 @@ int main() {
 		m2 /= NMSTEPS;
 		m4 /= NMSTEPS;
 
-		cout << m << "	 " << m1 << "	 " << m2 << "	 " << m4 << endl;
+		std::cout << m << "		" << m1 << "		" << m2 << "		" << m4 << endl;
 
 	}
 
