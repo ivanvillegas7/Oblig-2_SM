@@ -20,9 +20,7 @@ const int q = 3;  //Number of values each spin can take
 
 const int L = 16;  //System size
 
-const double k_B = 1.380649 * pow(10, -23);  //Boltzmann constant
-
-const double T = 0.5; //Temperature in units of J		NEEDS TO BE REPLACE FOR T/J=0.5
+const double T = 0.25; //Temperature in units of J		NEEDS TO BE REPLACE FOR T/J=0.5
 
 const int N = L; //Total number of spins
 
@@ -113,7 +111,7 @@ cx_vec k(N);
 void C(cx_vec& k) {
 
 	ofstream ofile;
-	ofile.open("C(r)_T_0.5.txt");		//NEEDS TO BE REPLACE FOR T / J = 0.5
+	ofile.open("C(r)_T_0.25.txt");		//NEEDS TO BE REPLACE FOR T / J = 0.5
 	ofile << "r" << "	" << "Real part" << endl;
 	ofile << scientific;
 
@@ -132,10 +130,9 @@ void C(cx_vec& k) {
 
 			}
 
-
 			m_0 = m_0 + conj(complex<double>(cos(2 * PI * S[0] / q), sin(2 * PI * S[0] / q)));
 			m_r = m_r + complex<double>(cos(2 * PI * S[r] / q), sin(2 * PI * S[r] / q));
-			m_p = m_p + m_0 * m_r;
+			m_p = m_p + conj(complex<double>(cos(2 * PI * S[0] / q), sin(2 * PI * S[0] / q))) * complex<double>(cos(2 * PI * S[r] / q), sin(2 * PI * S[r] / q));
 
 		}
 
@@ -147,6 +144,8 @@ void C(cx_vec& k) {
 
 
 		k(r) = m_p - (m_0 * m_r);
+
+		cout << r << "		" << k[r] << endl;
 
 		ofile << r << "		" << real(k(r)) << endl;
 
@@ -256,7 +255,7 @@ int main() {
 		m2 /= NMSTEPS;
 		m4 /= NMSTEPS;
 
-		std::cout << m << "		" << m1 << "		" << m2 << "		" << m4 << endl;
+		//std::cout << m << "		" << m1 << "		" << m2 << "		" << m4 << endl;
 
 	}
 
