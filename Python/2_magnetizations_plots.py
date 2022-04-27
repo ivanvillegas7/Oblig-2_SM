@@ -2,7 +2,7 @@
 """
 Created on Sat Apr 23 18:23:16 2022
 
-@author: Iván
+@author: Iván Villegas Pérez
 """
 
 import matplotlib.pyplot as plt
