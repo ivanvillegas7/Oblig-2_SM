@@ -55,7 +55,7 @@ const int NBINS = 10;  //Number of measurement bins
 
 const int points = pow(10, 3);  //Number of points
 
-Mat <int> S(N, N);  //The spin array
+Mat <int> S(N, N);  //The spin matrix
 
 vec M(q);  //Number of spins in each state
 
@@ -310,7 +310,7 @@ int main() {
 
 				}
 
-				tm /= N;
+				tm /= N*N;
 
 				m += tm;
 				m1 += abs(tm);
