@@ -2,7 +2,7 @@
 """
 Created on Thu Apr 14 12:25:09 2022
 
-@author: Iván Villegas Pérez
+@author: Iván
 """
 
 import numpy as np
