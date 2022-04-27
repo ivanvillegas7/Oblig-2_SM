@@ -10,7 +10,7 @@ using namespace std;
 
 #define PI 3.141592653589793238462643
 
-vector<double> TJ(double start_in, double end_in, int num_in)
+vector <double> TJ(double start_in, double end_in, int num_in)
 {
 
 	std::vector<double> linspaced;
@@ -53,6 +53,8 @@ const int NMSTEPS = 10000;  //Number of measurement MC steps
 
 const int NBINS = 10;  //Number of measurement bins
 
+const int points = pow(10, 3);  //Number of points
+
 Mat <int> S(N, N);  //The spin array
 
 vec M(q);  //Number of spins in each state
@@ -61,9 +63,9 @@ cx_vec W(q);  //Order parameter weights
 
 vector <int> pos(N);
 
-vector <double> T = TJ(0, 2, pow(10, 3));
+vector <double> T = TJ(0, pow(10, 5), points);  // NEEDS TO BE CHANGED FOR EVALUATING THE GAMMA RATIO TO A MAX. T = 2
 
-vector<double> pconnect;
+vector <double> pconnect;
 
 
 //Now we will define some methods in order to manipulate the lattice
@@ -185,7 +187,7 @@ void C(cx_vec& k, int h) {
 
 			m_0 = m_0 + conj(complex<double>(cos(2 * PI * S(0,0) / q), sin(2 * PI * S(0, 0) / q)));
 			m_r = m_r + complex<double>(cos(2 * PI * S(r, r) / q), sin(2 * PI * S(r, r) / q));
-			m_p = m_p + m_0 * m_r;
+			m_p = m_p + conj(complex<double>(cos(2 * PI * S(0, 0) / q), sin(2 * PI * S(0, 0) / q))) * complex<double>(cos(2 * PI * S(r, r) / q), sin(2 * PI * S(r, r) / q));
 
 		}
 
@@ -211,18 +213,18 @@ void C(cx_vec& k, int h) {
 int main() {
 
 	ofstream ofile;
-	ofile.open("m_2D.txt");//NEEDS TO BE CHANGED FOR DIFFERENT SIZES L={8, 16, 32} WHEN EVALUATING GAMMA
+	ofile.open("m_2D.txt");//NEEDS TO BE CHANGED FOR DIFFERENT SIZES L={8, 16, 32} WHEN EVALUATING GAMMA WITH NAME "m_2D_L.txt"
 	ofile << "T" << "	" << "Real part of <m>" << "	" << "<|m|^2>" << "	" << "<|m|^4>" << endl;
 	ofile << scientific;
 	
 
-	for (int i = 0; i < pow(10, 3); i++) {
+	for (int i = 0; i < points; i++) {
 
 		pconnect.push_back(1 - exp(-1 / T[i]));
 
 	}
 
-	for (int h = 0; h < pow(10, 3); h++) {
+	for (int h = 0; h < points; h++) {
 
 
 		//Initialize the weights
@@ -278,17 +280,16 @@ int main() {
 		}
 
 
+		//We define some variables that we will fill out with our measurements
+
+		complex<double> m(0., 0.);
+
+		double m1 = 0, m2 = 0, m4 = 0;
+
 
 		//Finally we perform the measure
 
 		for (int n = 0; n < NBINS; n++) {
-
-			//We define some variables that we will fill out with our measurements
-
-			complex<double> m(0., 0.);
-
-			double m1 = 0, m2 = 0, m4 = 0;
-
 
 
 			//Then we make NMSTEPS flips and measure
@@ -314,7 +315,7 @@ int main() {
 				m += tm;
 				m1 += abs(tm);
 				m2 += abs(tm) * abs(tm);
-				m4 += m2 * m2;
+				m4 += pow(abs(tm), 4);
 
 			}
 
@@ -328,35 +329,7 @@ int main() {
 		}
 
 
-		complex<double> m_(0., 0.);
-
-		double m_2 = 0, m_4 = 0;
-
-		for (int t = 0; t < NMSTEPS; t++) {
-
-			for (int c = 0; c < NCLUSTERS; c++) {
-
-				FlipandBuildFrom(rand() % N, rand() % N, h);
-
-			}
-
-			complex<double> tm_(0., 0.);
-
-			for (int s = 0; s < q; s++) {
-
-				tm_ += W[s] * double(M[s]);
-
-			}
-
-			tm_ /= N;
-
-			m_ += tm_;
-			m_2 += abs(m_) * abs(m_);
-			m_4 += m_2 * m_2;
-
-		}
-
-		ofile << T[h] << "		" << real(m_)/NMSTEPS << "		" << m_2/NMSTEPS << "		" << m_4 / NMSTEPS << endl;
+		ofile << T[h] << "		" << real(m) << "		" << m2 << "		" << m4 << endl;
 
 		//C(k, h);
 
